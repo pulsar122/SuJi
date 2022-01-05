@@ -1,8 +1,8 @@
-@database "SuJi V1.37"
+@database "SuJi V1.38"
 @options +g +zz -s -d12
 @author "Daniel H”pfl @ A, English: Peter West"
 @help "Hallo to start"
-@$VER: SuJi.hyp 1.37
+@$VER: SuJi.hyp 1.38
 @subject "Documentation/Miscellaneous"
 
 
@@ -14,7 +14,7 @@ Title                                                             SuJi
 
                                  for
 
-                              @{0B}SuJi V1.37@{0}
+                              @{0B}SuJi V1.38@{0}
 
                                   by
 
@@ -286,7 +286,7 @@ the right mouse button on the appropriate field in the window.
 @{0B}Name:@{0} and @{0B}Contains:@{0}
 
 On the first line enter the name of the file(s) to be searched for in
-the specified path(s). Multiple entries are permitted, separated by 
+the specified path(s). Multiple @{"entries" ignore} are permitted, separated by 
 commas. With operating systems that permit edit field scrolling, up to 
 100 characters may be input. Either complete filenames should be input,
 or wildcards can be used as discussed below.
@@ -349,10 +349,16 @@ activating the relevant button and entering the date(s) in either the
 European 'DD.MM.YYYY' or American 'MM.DD.YYYY' format.
 
 
+@{B}Show (empty) folders too@{0} 
+
+If this checkbox is active, folders matching the mask will be 
+included in the 'Name' column of the list, even if they are empty. 
+They will always be shown as having a size '0'.
+
 @{0B}CAPS==l.c.@{0}
 
 Activating the adjacent 'Name' and/or 'Content' field(s) will make the 
-search insensitive to case in the 'Name:' and/or 'Contains:' entries.
+search insensitive to case in the 'Name:' and/or 'Contains:' @{"entries" ignore}.
 
 
 @{0B}!@{0}
@@ -374,9 +380,9 @@ Clicking on the small right-facing arrowhead at bottom left of the
 mask dialog opens an extension listing the paths to be searched, to 
 which paths can be added, altered or deleted. Clicking on 'New ...' or 
 'Alter' brings up the file selector in which the desired path may be 
-selected. Note that unnecessary paths are removed (e.g. inputting 
+@{"selected" ignore}. Note that unnecessary paths are removed (e.g. inputting 
 'C:\' removes an existing 'C:\GEMSYS\'). For 'Delete', several paths 
-may be selected at once by holding down the 'Shift' key.
+may be @{"selected" ignore} at once by holding down the 'Shift' key.
 
 A click on the now downward-facing arrowhead hides the dialog 
 extension once again.
@@ -500,8 +506,8 @@ retains all the hidden information, which can be displayed again
 by changing the selections in the Options dialog.
 
 In addition you can influence the output to the clipboard. Besides 
-the check-boxes which let you choose which columns of the selected 
-entries are to be written to the clipboard with Control-C, you can 
+the check-boxes which let you choose which columns of the @{"selected" ignore} 
+@{"entries" ignore} are to be written to the clipboard with Control-C, you can 
 arrange the resulting text more flexibily by entering a formatting 
 string into the editable line. The following variables are 
 available for this:
@@ -514,7 +520,7 @@ available for this:
   %D, %d    Date
   %F, %f    Program flags
     %o      Path
-    %O      Filenames, aligned to longest pathname
+    %O      Pathnames, aligned to longest pathname
     %R      Start new line
  
 Example of an input string: %o%N %S
@@ -601,12 +607,19 @@ For the bubble Help messages, BubbleGEM has to be installed.
 @Line 1 70 0 0 7
 
 @autorefoff
-@Line 9 0 114 0 1
+@Line 9 0 138 0 1
 Version   Remarks
 @line 1 70 0 0 1
 
- 1.37     * Kein falsches Iconify-Icon mehr bei erneuter Suche.
-          * Search for folders (as well as files).
+ 1.38     * Documentation correct.
+          * If SuJi found a old "suji.inf", it will use
+            default values.
+
+@line 1 70 0 0 5
+
+ 1.37     * No longer displays a false Iconify icon with repeated
+            search.
+          * SuJi can search for folders (as well as files).
           * No more problems with memory protection under FreeMiNT.
           * If the TOS cannot produce extended objects (checkboxes) then 
             these will be created by SuJi.
@@ -760,6 +773,7 @@ Version   Remarks
           * Path list.
 
 @Line 1 70 0 0 1
+
 @autorefon
 @endnode
 

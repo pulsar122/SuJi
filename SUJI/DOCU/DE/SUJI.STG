@@ -1,7 +1,7 @@
-@database "SuJi V1.37"
+@database "SuJi V1.38"
 @subject "Dokumentation/Sonstiges"
 @author "Daniel Hîpfl, Gerhard Stoll"
-@$VER: SuJi.hyp 1.37 (@:"__DATE__")
+@$VER: SuJi.hyp 1.38 (@:"__DATE__")
 @options +gz-s-d12
 @help "Hallo erstma"
 
@@ -14,7 +14,7 @@ Titel                                                             SuJi
 
                                   zu
 
-                              @{B}SuJi 1.37@{b}
+                              @{B}SuJi 1.38@{b}
 
                                   von
 
@@ -236,7 +236,7 @@ Die Optionen sollten eigentlich selbsterklÑrend sein. Notfalls gibt
 es noch kleine Hilfen, wenn BubbleGEM installiert ist und man mit der 
 rechten Maustaste ins Fenster klick.
 
-@{B}Name und Inhalt@{b}
+@{0B}Name:@{0} und @{0B}Inhalt:@{b}
 
 @{B}Wildchars@{b}
 
@@ -379,7 +379,7 @@ folgende Variablen zur VerfÅgung:
   %D, %d    Datum
   %F, %f    Programmflags
     %o      Pfad
-    %O      Dateiname, mit BerÅcksichtigung der LÑnge aller Pfade.
+    %O      Pfad, mit BerÅcksichtigung der LÑnge aller Pfade.
     %R      Neue Zeile beginnen
 
 Beispiel einer Eingabe: %o%N %S
@@ -462,9 +462,15 @@ FÅr die Bubble-Hilfen muû BubbleGEM installiert sein.
 4.2  History                                                      SuJi
 @line 1 70 0 0 7
 
-@line 9 0 114 0 1
+@line 9 0 140 0 1
 Version   Bemerkung
 @line 1 70 0 0 1
+
+ 1.38     * Dokumentation aufgerÑumt.
+          * Wird eine alte "suji.inf" gefunden, werden vernÅnftige
+            Defaultwerte gesetzt.
+
+@line 1 70 0 0 5
 
  1.37     * Kein falsches Iconify-Icon mehr bei erneuter Suche.
           * Suchen nach Ordner.

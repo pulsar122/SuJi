@@ -1,8 +1,12 @@
 #include "SuJi_glo.h"
 
+extern int doppelklick;
+
 void open_path (char *path, char *name )
 {
 	int msg[8];
+
+	doppelklick = TRUE;
 	
 	if(av_server_kennt & 0x08000000l)
 	{

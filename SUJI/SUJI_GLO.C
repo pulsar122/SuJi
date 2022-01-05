@@ -33,6 +33,8 @@ int	phchar;
 int	pwbox;
 int	phbox;
 
+int ct60;
+
 /* Variablen fÅr die USERDEFs in der Listbox */
 USERBLK ud_ENTRY1;
 USERBLK ud_ENTRY2;

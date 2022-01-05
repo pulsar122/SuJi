@@ -1,5 +1,7 @@
 #include "SuJi_glo.h"
 
+int doppelklick;
+
 void simuliere_taste_button(EVNT *events)
 {
 	int msg[8];
@@ -42,8 +44,8 @@ int thread_may_exit=1;
 int master_event(unsigned int end_if_timer)
 {
 	do {
-		MOBLK m1blk={0};
-		MOBLK m2blk={0};
+		MOBLK m1blk={0, 0, 0 ,0, 0};
+		MOBLK m2blk={0, 0, 0 ,0, 0};
 
 		events.mwhich = 0;
 
@@ -53,6 +55,12 @@ int master_event(unsigned int end_if_timer)
 				,&m1blk,&m2blk,
 				(unsigned long)end_if_timer-1,
 				&events,&global);
+/*
+MsgAndLF ( "master_event:" );
+MsgEVNT ( &events );
+*/
+if ( events.mwhich & MU_MESAG )
+/* 	MsgShowMessage ( &events.msg[0] ); */
 
 		if(events.mwhich & MU_MESAG)
 		{

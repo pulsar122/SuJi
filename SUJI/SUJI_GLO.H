@@ -5,10 +5,11 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
-#include <tos.h>
 #include <scancode.h>
 #include <vdi.h>
 #include <aes.h>
+#include <tos.h>
+
 
 #ifndef FALSE
 #define FALSE	0
@@ -38,6 +39,7 @@
 
 #include "xdial.h"
 #include "dh_dir.h"
+#include "output.h"
 
 #define FA_LINK			0x40					/* New Atrribute for links */
 
@@ -118,6 +120,8 @@ extern int pwchar;
 extern int phchar;
 extern int pwbox;
 extern int phbox;
+
+extern int ct60;
 
 /* Variablen fÅr die USERDEFs in der Listbox */
 extern USERBLK ud_ENTRY1;

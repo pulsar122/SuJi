@@ -1,6 +1,6 @@
 #include "SuJi_glo.h"
 
-char versionsnummernstring[]="V1.37";
+char versionsnummernstring[]="V1.38";
 
 static OBJECT	**tree_addr;
 
@@ -10,6 +10,7 @@ int main(int argc,char *argv[])
 {
 	int ob_height;
 	int ret;
+	long cookie;
 
 /* Lange Dateinamen */
 	Pdomain(1);
@@ -57,6 +58,14 @@ int main(int argc,char *argv[])
 		mt_appl_exit(&global);
 		return 0;
 	}
+
+/* Test if the CT060 present */
+
+	if(!Ash_getcookie((long) 'CT60',&cookie))
+		 ct60 = FALSE;
+	else
+		 ct60 = TRUE;
+		 
 
 /* ™ffnen der VDI-Workstation */
 	vdi_h=init_vwork();
@@ -157,6 +166,12 @@ int main(int argc,char *argv[])
 	ob_height = dialog_maske.tree[0].ob_height;
 
 	load_config();
+
+/*
+MsgLF();
+MsgAndLF ( "Start" );
+MsgAndLF ( "-----" );
+*/
 
 	do
 	{
