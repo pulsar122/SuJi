@@ -25,6 +25,14 @@ char help_str_dialog[]="*:\\SuJi.hyp Der Maskendialog";
 
 int there_is_check_and_set;
 
+int	aes_flags;
+int	aes_font;
+int	aes_height;
+int	pwchar;
+int	phchar;
+int	pwbox;
+int	phbox;
+
 /* Variablen fÅr die USERDEFs in der Listbox */
 USERBLK ud_ENTRY1;
 USERBLK ud_ENTRY2;
@@ -189,4 +197,19 @@ int	home_search( char *filename, char *configpath )
 		return 0;
 	else
 		return 1;
+}
+
+/*----------------------------------------------------------------------------------------*/
+
+void *myMxalloc( int32 size, int16 mode )
+{
+	void  *memory;
+  int16 mxmask = Mxmask();
+  
+  if( mxmask!=0 )
+     memory = Mxalloc(size, mode & mxmask);
+  else
+     memory = Malloc(size);
+
+	return memory;
 }

@@ -785,6 +785,7 @@ int handle_freedom_workaround(DIALOG *dialog,EVNT *events,int obj,int clicks,voi
 
 			suji.big_is_small_maske=dialog_maske.tree[MASKE_BS].ob_state & SELECTED;
 			suji.big_is_small_inhalt=dialog_maske.tree[INHALT_BS].ob_state & SELECTED;
+			suji.show_folder=dialog_maske.tree[MASKE_ORDNER].ob_state & SELECTED;
 
 			if(dialog_maske.tree[MASKE_BIGGER].ob_state & SELECTED)
 			{
@@ -1070,6 +1071,8 @@ void handle_dialog(void *pfade, int *x, int *y)
 
 	dialog_maske.x = *x;
 	dialog_maske.y = *y;
+
+	mt_rsrc_gaddr(5,DIALOG_TITEL,&alert,&global);
 	
 	if(!(mt_appl_getinfo(7,&i,NULL,NULL,NULL,&global) &&	(i & 1) &&
 		(maske_dialog=mt_wdlg_create(handle_exit,dialog_maske.tree,&dialog_maske,0,0,0,&global))!=0 &&
@@ -1289,6 +1292,10 @@ void handle_dialog(void *pfade, int *x, int *y)
 						tree[0].ob_width=r.g_w;
 						tree[0].ob_height=r.g_h;
 
+						tree[SU_ICON1].ob_flags &= ~HIDETREE;
+						tree[SU_ICON3].ob_flags |= HIDETREE;
+						tree[ICON_ZAHL].ob_flags |= HIDETREE;
+
 						tree[SU_ICON].ob_x=r.g_w/2-tree[SU_ICON].ob_width/2;
 						tree[SU_ICON].ob_y=r.g_h/2-tree[SU_ICON].ob_height/2;
 
@@ -1371,6 +1378,24 @@ void handle_dialog(void *pfade, int *x, int *y)
 					case BUBBLEGEM_REQUEST:
 						if(events.msg[6]==0)
 							bubble_hilfen(events.msg[3],events.msg[4],events.msg[5]);
+						break;
+					case GS_REQUEST:
+					case GS_COMMAND:
+					case GS_QUIT:
+						if ( gem_script ( events.msg ) )
+						{
+							events.msg[0]=WM_CLOSED;
+							events.msg[1]=ap_id;
+							events.msg[2]=0;
+							events.msg[3]=dialog_maske.w_handle;
+							events.msg[4]=0;
+							events.msg[5]=0;
+							events.msg[6]=0;
+							events.msg[7]=0;
+						}
+						break;
+					default:
+/* printf (	"msg: %i\r\n", events.msg[0] ); */
 						break;
 				}
 			}
@@ -1586,6 +1611,9 @@ void bubble_hilfen(int fenster,int x, int y)
 			case INHALT_BS:
 				str=tree[HD_BIG_IS_SMALLI].ob_spec.free_string;
 				break;
+			case MASKE_ORDNER:
+				str=tree[HD_ORDNER].ob_spec.free_string;
+			break;
 			case MASKE_INFO_SW:
 			case MASKE_INFO_FARBE:
 				str=versionsnummernstring;
@@ -1599,9 +1627,7 @@ void bubble_hilfen(int fenster,int x, int y)
 
 	if(str && (bubble_id=mt_appl_find("BUBBLE  ",&global))>=0)
 	{
-		bubble_text=(char *)Mxalloc(256+16,0x22);
-		if(bubble_text==(char *) (-32))
-			bubble_text=(char *)Malloc(256+16);
+		bubble_text = (char *) myMxalloc (256+16, 0x22);
 
 		if(bubble_text)
 		{

@@ -34,6 +34,7 @@ int durchsuche_alle(char **pfad,int pfade)
 	mt_rsrc_gaddr(0,MASKE_ICONIFY,&tree,&global);
 	tree[SU_ICON1].ob_flags |= HIDETREE;
 	tree[SU_ICON3].ob_flags &= ~HIDETREE;
+	tree[ICON_ZAHL].ob_flags &= ~HIDETREE;
 
 	if(shaded_or_iconified)
 	{
@@ -68,7 +69,7 @@ int durchsuche(char *pfad)
 				return ret;
 			}
 
-			if(my_dta->d_attrib & FA_SUBDIR)
+			if( my_dta->d_attrib & FA_SUBDIR )
 			{
 				char *sub;
 
@@ -79,6 +80,29 @@ int durchsuche(char *pfad)
 					strcat(sub,my_dta->d_fname);
 					sub[strlen(sub)+1]='\0';
 					sub[strlen(sub)]='\\';
+
+					if ( suji.show_folder &&
+							 wildchar(suji.maske,my_dta->d_fname,suji.big_is_small_maske) )
+					{
+						FILE_INFO *akt;
+						long sort_nr;
+
+						akt=add_to_list(my_dta,pfad,&sort_nr);
+						if(akt)
+						{
+							strcat (akt->name, "\\" );
+							durchsuche_redraw ( akt, sort_nr );
+						}
+						else
+						{
+							mt_rsrc_gaddr(5,ERR_NO_MEM2,&alert,&global);
+							if(mt_form_alert(1,alert,&global)==2)
+							{
+								DHclosedir(handle);
+								return -1;
+							}
+						}
+					}
 
 					err=durchsuche(sub);
 
@@ -130,171 +154,7 @@ int durchsuche(char *pfad)
 
 					akt=add_to_list(my_dta,pfad,&sort_nr);
 					if(akt)
-					{
-						if(test_max_breite(akt) && !shaded_or_iconified)
-						{
-							GRECT r;
-
-							if(sort_nr-1<first_shown)
-							{
-								if(finfos>lines_to_show)
-									first_shown++;
-							}
-
-							calc_slider();
-							mt_wind_get_grect(window_handle,WF_WORKXYWH,&r,&global);
-
-							if(mt_wind_update(BEG_UPDATE|there_is_check_and_set,&global))
-							{
-								redraw_window(&r);
-								mt_wind_update(END_UPDATE,&global);
-							}
-							else
-							{
-								int msg[8];
-
-								msg[0]=WM_REDRAW;
-								msg[1]=ap_id;
-								msg[2]=0;
-								msg[3]=window_handle;
-								msg[4]=r.g_x;
-								msg[5]=r.g_y;
-								msg[6]=r.g_w;
-								msg[7]=r.g_h;
-
-								mt_appl_write(ap_id,16,msg,&global);
-							}
-						}
-						else
-						{
-							if(!shaded_or_iconified && 
-								sort_nr<=first_shown+lines_to_show &&
-								(first_shown==0 || sort_nr>=first_shown+2))
-							{
-								GRECT r,fn;
-
-								if(mt_wind_update(BEG_UPDATE|there_is_check_and_set,&global))
-								{
-									set_mouse(M_OFF);
-									
-									mt_wind_get_grect(window_handle,WF_WORKXYWH,&r,&global);
-									
-									r.g_y+=top_height+(int) ((sort_nr-first_shown-1)*((long) line_height));
-									r.g_h-=top_height+(int) ((sort_nr-first_shown-1)*((long) line_height));
-									
-									mt_wind_get_grect(window_handle,WF_FIRSTXYWH,&fn,&global);
-									while(fn.g_w && fn.g_h)
-									{
-										fn.g_w=(fn.g_x+fn.g_w<r.g_x+r.g_w ? fn.g_x+fn.g_w : r.g_x+r.g_w)-(fn.g_x>r.g_x ? fn.g_x : r.g_x);
-										fn.g_h=(fn.g_y+fn.g_h<r.g_y+r.g_h ? fn.g_y+fn.g_h : r.g_y+r.g_h)-(fn.g_y>r.g_y ? fn.g_y : r.g_y);
-										fn.g_x=fn.g_x>r.g_x ? fn.g_x : r.g_x;
-										fn.g_y=fn.g_y>r.g_y ? fn.g_y : r.g_y;
-									
-										if(((fn.g_x+fn.g_w<r.g_x+r.g_w ? fn.g_x+fn.g_w : r.g_x+r.g_w) > (fn.g_x>r.g_x ? fn.g_x : r.g_x)) && ((fn.g_y+fn.g_h<r.g_y+r.g_h ? fn.g_y+fn.g_h : r.g_y+r.g_h) > (fn.g_y>r.g_y ? fn.g_y : r.g_y)))
-										{
-											MFDB quell={0};
-											MFDB ziel={0};
-											int xy[8];
-									
-											xy[0]=fn.g_x;
-											xy[1]=fn.g_y;
-											xy[2]=xy[0]+fn.g_w-1;
-											xy[3]=xy[1]+fn.g_h-1;
-									
-											xy[4]=xy[0];
-									
-											xy[5]=xy[1]+line_height;
-									
-											xy[6]=xy[4]+fn.g_w-1;
-											xy[7]=xy[5]+fn.g_h-1;
-									
-											vs_clip(vdi_h,1,xy);
-									
-											vro_cpyfm(vdi_h,S_ONLY,xy,&quell,&ziel);
-									
-											xy[0]=fn.g_x;
-											xy[2]=fn.g_w;
-										
-											xy[1]=fn.g_y;
-											xy[3]=xy[7]-xy[3]+1;
-									
-											xy[2]=(xy[0]+xy[2]<fn.g_x+fn.g_w ? xy[0]+xy[2] : fn.g_x+fn.g_w)-(xy[0]>fn.g_x ? xy[0] : fn.g_x);
-											xy[3]=(xy[1]+xy[3]<fn.g_y+fn.g_h ? xy[1]+xy[3] : fn.g_y+fn.g_h)-(xy[1]>fn.g_y ? xy[1] : fn.g_y);
-											xy[0]=xy[0]>fn.g_x ? xy[0] : fn.g_x;
-											xy[1]=xy[1]>fn.g_y ? xy[1] : fn.g_y;
-									
-											if(((xy[0]+xy[2]<fn.g_x+fn.g_w ? xy[0]+xy[2] : fn.g_x+fn.g_w) > (xy[0]>fn.g_x ? xy[0] : fn.g_x)) &&
-												((xy[1]+xy[3]<fn.g_y+fn.g_h ? xy[1]+xy[3] : fn.g_y+fn.g_h) > (xy[1]>fn.g_y ? xy[1] : fn.g_y)))
-											{
-												xy[4]=xy[0];
-												xy[5]=xy[1];
-												xy[6]=xy[0]+xy[2]-1;
-												xy[7]=xy[1]+xy[3]-1;
-							
-												vs_clip(vdi_h,1,&xy[4]);
-
-												xy[0]*=-1;	/* Alle negativ, damit ohne WF_FIRST/NEXTXYWH gezeichet wird */
-												xy[1]*=-1;
-												xy[2]*=-1;
-												xy[3]*=-1;
-
-												redraw_window((GRECT *)xy);
-											}
-										}
-									
-										mt_wind_get_grect(window_handle,WF_NEXTXYWH,&fn,&global);
-									}
-
-									set_mouse(M_ON);
-									mt_wind_update(END_UPDATE,&global);
-								}
-								else
-								{
-									int msg[8];
-	
-									mt_wind_get_grect(window_handle,WF_WORKXYWH,(GRECT *)&msg[4],&global);
-									msg[0]=WM_REDRAW;
-									msg[1]=ap_id;
-									msg[2]=0;
-									msg[3]=window_handle;
-	
-									mt_appl_write(ap_id,16,msg,&global);
-								}
-							}
-							else if(sort_nr-1<first_shown)
-							{
-								if(finfos>lines_to_show)
-									first_shown++;
-							}
-	
-							if(calc_slider() && !shaded_or_iconified)
-							{
-								if(mt_wind_update(BEG_UPDATE|there_is_check_and_set,&global))
-								{
-									GRECT r;
-
-									mt_wind_get_grect(window_handle,WF_WORKXYWH,&r,&global);
-	
-									redraw_window(&r);
-									mt_wind_update(END_UPDATE,&global);
-								}
-								else
-								{
-									int msg[8];
-	
-									mt_wind_get_grect(window_handle,WF_WORKXYWH,(GRECT *)&msg[4],&global);
-									msg[0]=WM_REDRAW;
-									msg[1]=ap_id;
-									msg[2]=0;
-									msg[3]=window_handle;
-	
-									mt_appl_write(ap_id,16,msg,&global);
-								}
-							}
-						}
-
-						set_info_line();
-					}
+						durchsuche_redraw ( akt, sort_nr );
 					else
 					{
 						mt_rsrc_gaddr(5,ERR_NO_MEM2,&alert,&global);
@@ -313,6 +173,174 @@ int durchsuche(char *pfad)
 
 	return 0;
 }
+
+void durchsuche_redraw ( FILE_INFO *akt, long sort_nr )
+{
+	if(test_max_breite(akt) && !shaded_or_iconified)
+	{
+		GRECT r;
+
+		if(sort_nr-1<first_shown)
+		{
+			if(finfos>lines_to_show)
+				first_shown++;
+		}
+
+		calc_slider();
+		mt_wind_get_grect(window_handle,WF_WORKXYWH,&r,&global);
+
+		if(mt_wind_update(BEG_UPDATE|there_is_check_and_set,&global))
+		{
+			redraw_window(&r);
+			mt_wind_update(END_UPDATE,&global);
+		}
+		else
+		{
+			int msg[8];
+
+			msg[0]=WM_REDRAW;
+			msg[1]=ap_id;
+			msg[2]=0;
+			msg[3]=window_handle;
+			msg[4]=r.g_x;
+			msg[5]=r.g_y;
+			msg[6]=r.g_w;
+			msg[7]=r.g_h;
+
+			mt_appl_write(ap_id,16,msg,&global);
+		}
+	}
+	else
+	{
+		if(!shaded_or_iconified && 
+			sort_nr<=first_shown+lines_to_show &&
+			(first_shown==0 || sort_nr>=first_shown+2))
+		{
+			GRECT r,fn;
+
+			if(mt_wind_update(BEG_UPDATE|there_is_check_and_set,&global))
+			{
+				set_mouse(M_OFF);
+				
+				mt_wind_get_grect(window_handle,WF_WORKXYWH,&r,&global);
+				
+				r.g_y+=top_height+(int) ((sort_nr-first_shown-1)*((long) line_height));
+				r.g_h-=top_height+(int) ((sort_nr-first_shown-1)*((long) line_height));
+				
+				mt_wind_get_grect(window_handle,WF_FIRSTXYWH,&fn,&global);
+				while(fn.g_w && fn.g_h)
+				{
+					fn.g_w=(fn.g_x+fn.g_w<r.g_x+r.g_w ? fn.g_x+fn.g_w : r.g_x+r.g_w)-(fn.g_x>r.g_x ? fn.g_x : r.g_x);
+					fn.g_h=(fn.g_y+fn.g_h<r.g_y+r.g_h ? fn.g_y+fn.g_h : r.g_y+r.g_h)-(fn.g_y>r.g_y ? fn.g_y : r.g_y);
+					fn.g_x=fn.g_x>r.g_x ? fn.g_x : r.g_x;
+					fn.g_y=fn.g_y>r.g_y ? fn.g_y : r.g_y;
+				
+					if(((fn.g_x+fn.g_w<r.g_x+r.g_w ? fn.g_x+fn.g_w : r.g_x+r.g_w) > (fn.g_x>r.g_x ? fn.g_x : r.g_x)) && ((fn.g_y+fn.g_h<r.g_y+r.g_h ? fn.g_y+fn.g_h : r.g_y+r.g_h) > (fn.g_y>r.g_y ? fn.g_y : r.g_y)))
+					{
+						MFDB quell={0};
+						MFDB ziel={0};
+						int xy[8];
+				
+						xy[0]=fn.g_x;
+						xy[1]=fn.g_y;
+						xy[2]=xy[0]+fn.g_w-1;
+						xy[3]=xy[1]+fn.g_h-1;
+				
+						xy[4]=xy[0];
+				
+						xy[5]=xy[1]+line_height;
+				
+						xy[6]=xy[4]+fn.g_w-1;
+						xy[7]=xy[5]+fn.g_h-1;
+				
+						vs_clip(vdi_h,1,xy);
+				
+						vro_cpyfm(vdi_h,S_ONLY,xy,&quell,&ziel);
+				
+						xy[0]=fn.g_x;
+						xy[2]=fn.g_w;
+					
+						xy[1]=fn.g_y;
+						xy[3]=xy[7]-xy[3]+1;
+				
+						xy[2]=(xy[0]+xy[2]<fn.g_x+fn.g_w ? xy[0]+xy[2] : fn.g_x+fn.g_w)-(xy[0]>fn.g_x ? xy[0] : fn.g_x);
+						xy[3]=(xy[1]+xy[3]<fn.g_y+fn.g_h ? xy[1]+xy[3] : fn.g_y+fn.g_h)-(xy[1]>fn.g_y ? xy[1] : fn.g_y);
+						xy[0]=xy[0]>fn.g_x ? xy[0] : fn.g_x;
+						xy[1]=xy[1]>fn.g_y ? xy[1] : fn.g_y;
+				
+						if(((xy[0]+xy[2]<fn.g_x+fn.g_w ? xy[0]+xy[2] : fn.g_x+fn.g_w) > (xy[0]>fn.g_x ? xy[0] : fn.g_x)) &&
+							((xy[1]+xy[3]<fn.g_y+fn.g_h ? xy[1]+xy[3] : fn.g_y+fn.g_h) > (xy[1]>fn.g_y ? xy[1] : fn.g_y)))
+						{
+							xy[4]=xy[0];
+							xy[5]=xy[1];
+							xy[6]=xy[0]+xy[2]-1;
+							xy[7]=xy[1]+xy[3]-1;
+		
+							vs_clip(vdi_h,1,&xy[4]);
+
+							xy[0]*=-1;	/* Alle negativ, damit ohne WF_FIRST/NEXTXYWH gezeichet wird */
+							xy[1]*=-1;
+							xy[2]*=-1;
+							xy[3]*=-1;
+
+							redraw_window((GRECT *)xy);
+						}
+					}
+				
+					mt_wind_get_grect(window_handle,WF_NEXTXYWH,&fn,&global);
+				}
+
+				set_mouse(M_ON);
+				mt_wind_update(END_UPDATE,&global);
+			}
+			else
+			{
+				int msg[8];
+
+				mt_wind_get_grect(window_handle,WF_WORKXYWH,(GRECT *)&msg[4],&global);
+				msg[0]=WM_REDRAW;
+				msg[1]=ap_id;
+				msg[2]=0;
+				msg[3]=window_handle;
+
+				mt_appl_write(ap_id,16,msg,&global);
+			}
+		}
+		else if(sort_nr-1<first_shown)
+		{
+			if(finfos>lines_to_show)
+				first_shown++;
+		}
+
+		if(calc_slider() && !shaded_or_iconified)
+		{
+			if(mt_wind_update(BEG_UPDATE|there_is_check_and_set,&global))
+			{
+				GRECT r;
+
+				mt_wind_get_grect(window_handle,WF_WORKXYWH,&r,&global);
+
+				redraw_window(&r);
+				mt_wind_update(END_UPDATE,&global);
+			}
+			else
+			{
+				int msg[8];
+
+				mt_wind_get_grect(window_handle,WF_WORKXYWH,(GRECT *)&msg[4],&global);
+				msg[0]=WM_REDRAW;
+				msg[1]=ap_id;
+				msg[2]=0;
+				msg[3]=window_handle;
+
+				mt_appl_write(ap_id,16,msg,&global);
+			}
+		}
+	}
+	set_info_line();
+
+} /* durchsuche_redraw */
+
 
 int do_wildchar(char *mask,char *test,int big_is_small)
 {

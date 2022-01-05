@@ -1,8 +1,8 @@
-@database "SuJi V1.36"
+@database "SuJi V1.37"
 @options +g +zz -s -d12
 @author "Daniel H”pfl @ A, English: Peter West"
 @help "Hallo to start"
-@$VER: SuJi.hyp 1.36
+@$VER: SuJi.hyp 1.37
 @subject "Documentation/Miscellaneous"
 
 
@@ -14,7 +14,7 @@ Title                                                             SuJi
 
                                  for
 
-                              @{0B}SuJi V1.36@{0}
+                              @{0B}SuJi V1.37@{0}
 
                                   by
 
@@ -429,7 +429,7 @@ Small help messages are available again with a right mouse click if
 BubbleGEM is installed.
 
 @{0B}Contents@{0}
-
+@symbol a selected entries
 Clicking on one of the files displayed here marks it (shown in inverse 
 video). Holding down 'Shift' permits several files to be marked.
 
@@ -499,10 +499,30 @@ Only the crossed items will be displayed. However, the program
 retains all the hidden information, which can be displayed again 
 by changing the selections in the Options dialog.
 
-In addition one can choose which columns are to be written to the 
-clipboard.
+In addition you can influence the output to the clipboard. Besides 
+the check-boxes which let you choose which columns of the selected 
+entries are to be written to the clipboard with Control-C, you can 
+arrange the resulting text more flexibily by entering a formatting 
+string into the editable line. The following variables are 
+available for this:
 
+ Variable   Description
+    %n      Filenames
+    %N      Filenames, aligned to longest name
+  %S, %s    Size in bytes
+  %T, %t    Time
+  %D, %d    Date
+  %F, %f    Program flags
+    %o      Path
+    %O      Filenames, aligned to longest pathname
+    %R      Start new line
+ 
+Example of an input string: %o%N %S
+No %R is required at the end of a line - this is done automatically.
 
+The choice of using the editable input line rather than the checkboxes
+is made as soon as the program finds that something has been entered
+in the line.
 @endnode
 
 @node "More about V1.0"
@@ -581,9 +601,23 @@ For the bubble Help messages, BubbleGEM has to be installed.
 @Line 1 70 0 0 7
 
 @autorefoff
-@Line 9 0 107 0 1
+@Line 9 0 114 0 1
 Version   Remarks
-@Line 1 70 0 0 1
+@line 1 70 0 0 1
+
+ 1.37     * Kein falsches Iconify-Icon mehr bei erneuter Suche.
+          * Search for folders (as well as files).
+          * No more problems with memory protection under FreeMiNT.
+          * If the TOS cannot produce extended objects (checkboxes) then 
+            these will be created by SuJi.
+          * GEMScript support for the following commands:
+              - AppGetLongName()      Returns "SuJi"
+              - Copy()                List -> Clipboard
+              - Quit()                Exit SuJi
+              - ToFront()             Top SuJi window
+          * More flexible output to the clipboard
+
+@line 1 70 0 0 5
 
  1.36     * Daniel H”pfl has released the sources.
           * Window positions and sizes are saved.

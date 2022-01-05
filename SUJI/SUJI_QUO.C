@@ -66,9 +66,7 @@ char *make_quote(FILE_INFO *par,int getrennt)
 
 				bytes=qp+qn+strlen(par->pfad)+strlen(par->name)+2;
 
-				ret=(char *)Mxalloc(bytes,0x22);
-				if(ret==(char *) (-32))
-					ret=(char *)Malloc(bytes);
+				ret=(char *)myMxalloc (bytes, 0x22);
 
 				if(!ret)
 					return 0l;
@@ -109,9 +107,7 @@ char *make_quote(FILE_INFO *par,int getrennt)
 			{
 				bytes=strlen(par->pfad)+strlen(par->name)+2;
 
-				ret=(char *)Mxalloc(bytes,0x22);
-				if(ret==(char *) (-32))
-					ret=(char *)Malloc(bytes);
+				ret=(char *)myMxalloc (bytes, 0x22);
 
 				if(!ret)
 					return 0l;
@@ -130,9 +126,7 @@ char *make_quote(FILE_INFO *par,int getrennt)
 
 				bytes=qp+qn+strlen(par->pfad)+strlen(par->name)+1;
 
-				ret=(char *)Mxalloc(bytes,0x22);
-				if(ret==(char *) (-32))
-					ret=(char *)Malloc(bytes);
+				ret=(char *)myMxalloc (bytes, 0x22);
 
 				if(!ret)
 					return 0l;
@@ -164,9 +158,7 @@ char *make_quote(FILE_INFO *par,int getrennt)
 			{
 				bytes=strlen(par->pfad)+strlen(par->name)+2;
 
-				ret=(char *)Mxalloc(bytes,0x22);
-				if(ret==(char *) (-32))
-					ret=(char *)Malloc(bytes);
+				ret=(char *)myMxalloc (bytes, 0x22);
 
 				if(!ret)
 					return 0l;
@@ -207,9 +199,7 @@ char *make_quote(FILE_INFO *par,int getrennt)
 
 			bytes++;
 
-			ret=(char *)Mxalloc(bytes,0x22);
-			if(ret==(char *) (-32))
-				ret=(char *)Malloc(bytes);
+			ret=(char *)myMxalloc (bytes, 0x22);
 
 			if(!ret)
 				return 0l;
@@ -291,9 +281,7 @@ char *make_quote(FILE_INFO *par,int getrennt)
 			if(bytes==0l)
 				return 0l;
 
-			ret=(char *)Mxalloc(bytes,0x22);
-			if(ret==(char *) (-32))
-				ret=(char *)Malloc(bytes);
+			ret=(char *)myMxalloc (bytes, 0x22);
 
 			if(!ret)
 				return 0l;

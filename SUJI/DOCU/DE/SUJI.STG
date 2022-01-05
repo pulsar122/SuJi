@@ -1,7 +1,7 @@
-@database "SuJi V1.36"
+@database "SuJi V1.37"
 @subject "Dokumentation/Sonstiges"
 @author "Daniel H”pfl, Gerhard Stoll"
-@$VER: SuJi.hyp 1.36 (@:"__DATE__")
+@$VER: SuJi.hyp 1.37 (@:"__DATE__")
 @options +gz-s-d12
 @help "Hallo erstma"
 
@@ -14,7 +14,7 @@ Titel                                                             SuJi
 
                                   zu
 
-                              @{B}SuJi 1.36@{b}
+                              @{B}SuJi 1.37@{b}
 
                                   von
 
@@ -44,7 +44,7 @@ Inhaltsverzeichnis                                                SuJi
   3  Benutzung
     3.1  Der Maskendialog
     3.2  Die Liste
-    3.2.1  Der Optionsdialog
+        3.2.1  Der Optionsdialog
  
   4  Sonstiges zur V1.0
     4.1  Bekannte M„ngel
@@ -86,9 +86,6 @@ Finder ist Shareware und als Student ...
 Was rausgekommen ist sieht man (hoffentlich) in diesem Archiv.
 
 Daniel
-
-PS: Aktuelle Versionen von SuJi gibt es immer in der Maus A und auf
-meiner geheimen Homepage ;-)
 @endnode
 
 @node "Rechtliches"
@@ -225,7 +222,7 @@ Ggf. jetzt "Sonstiges:Desktop sichern"
 
     3.1  Der Maskendialog
     3.2  Die Liste
-
+        3.2.1  Der Optionsdialog
 @endnode
 
 @node "Der Maskendialog"
@@ -366,12 +363,31 @@ Shift      Eine Seite nach links
 
 In diesem Dialog, den man mit Alternate O aufruft wenn das Listen-
 fenster offen ist, kann man w„hlen welche Spalten angezeigt werden
-sollen.
-Nur angew„hlte Eintr„ge werden angezeigt. Dies kann beliebig ge-
-„ndert werden.
+sollen. Nur angew„hlte Eintr„ge werden angezeigt. Dies kann beliebig
+ge„ndert werden.
 
-Zus„tzlich kann man ausw„hlen welche Spalten ins Klemmbrett ge-
-schrieben werden sollen.
+Zus„tzlich kann die Ausgabe ins Klemmbrett beeinflužt werden. Neben
+den Checkboxen kann auch man die Ausgabe felxibler gestallten. In der
+Eingabezeile kann ein Format-String eingeben werden. Dafr stehen
+folgende Variablen zur Verfgung:
+
+ Variable   Beschreibung
+    %n      Dateiname
+    %N      Dateiname, mit Bercksichtigung der L„nge aller Name.
+  %S, %s    Groesse in Bytes
+  %T, %t    Zeit
+  %D, %d    Datum
+  %F, %f    Programmflags
+    %o      Pfad
+    %O      Dateiname, mit Bercksichtigung der L„nge aller Pfade.
+    %R      Neue Zeile beginnen
+
+Beispiel einer Eingabe: %o%N %S
+Am Ende einer Zeile ist kein %R notwendig. Dies erfolgt automatisch.
+
+Die Auswahl ob die Eingabezeile oder die Checkboxen genutzt werden
+erfolgt im Moment in dem ermittelt wird ob in der Zeile etwas
+eingetragen ist.
 
 @endnode
 
@@ -449,6 +465,20 @@ Fr die Bubble-Hilfen muž BubbleGEM installiert sein.
 @line 9 0 114 0 1
 Version   Bemerkung
 @line 1 70 0 0 1
+
+ 1.37     * Kein falsches Iconify-Icon mehr bei erneuter Suche.
+          * Suchen nach Ordner.
+          * Macht keine Probleme mehr mit Speicherschutz unter FreeMiNT
+          * Besitzt ein TOS keine erweiterten Objekte (Checkboxen)
+            so werden diese selbst erzeugt.
+          * GEMScript-Untersttzung mit folgenden Befehlen:
+              - AppGetLongName()      liefert "SuJi"
+              - Copy()                Liste -> Clipboard
+              - Quit()                Ende halt
+              - ToFront()             Fenster toppen
+          * Die Ausgabe ins Klemmbrett ist fexibler.
+
+@line 1 70 0 0 5
 
  1.36     * Daniel H”pfl hat die Quellen freigegeben.
           * Fensterpositionen und -gr”žen werden gespeichert
@@ -603,7 +633,7 @@ Version   Bemerkung
 @line 1 70 0 0 7
 
 Drohbriefe, Flames, Liebesbriefe usw. an:
-	
+  
              gerhard_stoll@gmx.de
              daniel@hoepfl.de
 

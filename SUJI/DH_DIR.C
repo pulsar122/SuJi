@@ -97,6 +97,8 @@ int DHxreaddir(void *handle,DTA **info)
 				(err==0 && Fxattr(1,(char *)(((char *)&((long *)handle)[2])+sizeof(DTA)-18),&xattr)==0))
 			{
 				dta->d_attrib=xattr.attr;
+				if ( (xattr.mode & S_IFMT) == S_IFLNK )
+					dta->d_attrib |= FA_LINK;
 				dta->d_time=xattr.mtime;
 				dta->d_date=xattr.mdate;
 				dta->d_length=xattr.size;

@@ -18,28 +18,28 @@
 #define MO_EDIT 15  /* FTEXT in tree MASKE_DIALOG */
 #define MASKE_BS 17  /* BUTTON in tree MASKE_DIALOG */
 #define INHALT_BS 18  /* BUTTON in tree MASKE_DIALOG */
-#define CLOSE_LIST 19  /* IMAGE in tree MASKE_DIALOG */
-#define OPEN_LIST 20  /* IMAGE in tree MASKE_DIALOG */
-#define MASKE_ABB 21  /* BUTTON in tree MASKE_DIALOG */
-#define MASKE_OK 22  /* BUTTON in tree MASKE_DIALOG */
-#define LIST_ROOM 23  /* IBOX in tree MASKE_DIALOG */
-#define ENTRIES_BACK 24  /* IBOX in tree MASKE_DIALOG */
-#define ENTRY_1 25  /* TEXT in tree MASKE_DIALOG */
-#define ENTRY_2 26  /* TEXT in tree MASKE_DIALOG */
-#define ENTRY_3 27  /* TEXT in tree MASKE_DIALOG */
-#define ENTRY_4 28  /* TEXT in tree MASKE_DIALOG */
-#define VSL_BACK 29  /* BOX in tree MASKE_DIALOG */
-#define VSL_SLIDER 30  /* BOX in tree MASKE_DIALOG */
-#define VSL_DOWN 31  /* BOXCHAR in tree MASKE_DIALOG */
-#define VSL_UP 32  /* BOXCHAR in tree MASKE_DIALOG */
-#define HSL_BACK 33  /* BOX in tree MASKE_DIALOG */
-#define HSL_SLIDER 34  /* BOX in tree MASKE_DIALOG */
-#define HSL_LEFT 35  /* BOXCHAR in tree MASKE_DIALOG */
-#define HSL_RIGHT 36  /* BOXCHAR in tree MASKE_DIALOG */
-#define LIST_KILL 37  /* BUTTON in tree MASKE_DIALOG */
-#define LIST_ADD 38  /* BUTTON in tree MASKE_DIALOG */
-#define SLBOX_ECKE 39  /* BOXCHAR in tree MASKE_DIALOG */
-#define LIST_CHANGE 40  /* BUTTON in tree MASKE_DIALOG */
+#define MASKE_ABB 19  /* BUTTON in tree MASKE_DIALOG */
+#define MASKE_OK 20  /* BUTTON in tree MASKE_DIALOG */
+#define LIST_ROOM 21  /* IBOX in tree MASKE_DIALOG */
+#define ENTRIES_BACK 22  /* IBOX in tree MASKE_DIALOG */
+#define ENTRY_1 23  /* TEXT in tree MASKE_DIALOG */
+#define ENTRY_2 24  /* TEXT in tree MASKE_DIALOG */
+#define ENTRY_3 25  /* TEXT in tree MASKE_DIALOG */
+#define ENTRY_4 26  /* TEXT in tree MASKE_DIALOG */
+#define VSL_BACK 27  /* BOX in tree MASKE_DIALOG */
+#define VSL_SLIDER 28  /* BOX in tree MASKE_DIALOG */
+#define VSL_DOWN 29  /* BOXCHAR in tree MASKE_DIALOG */
+#define VSL_UP 30  /* BOXCHAR in tree MASKE_DIALOG */
+#define HSL_BACK 31  /* BOX in tree MASKE_DIALOG */
+#define HSL_SLIDER 32  /* BOX in tree MASKE_DIALOG */
+#define HSL_LEFT 33  /* BOXCHAR in tree MASKE_DIALOG */
+#define HSL_RIGHT 34  /* BOXCHAR in tree MASKE_DIALOG */
+#define LIST_KILL 35  /* BUTTON in tree MASKE_DIALOG */
+#define LIST_ADD 36  /* BUTTON in tree MASKE_DIALOG */
+#define SLBOX_ECKE 37  /* BOXCHAR in tree MASKE_DIALOG */
+#define LIST_CHANGE 38  /* BUTTON in tree MASKE_DIALOG */
+#define CLOSE_LIST 39  /* IMAGE in tree MASKE_DIALOG */
+#define OPEN_LIST 40  /* IMAGE in tree MASKE_DIALOG */
 #define MASKE_INFO1 41  /* IMAGE in tree MASKE_DIALOG */
 #define MASKE_INFO2 42  /* IMAGE in tree MASKE_DIALOG */
 #define MASKE_INFO3 43  /* IMAGE in tree MASKE_DIALOG */
@@ -52,6 +52,7 @@
 #define MASKE_HELP4 50  /* IMAGE in tree MASKE_DIALOG */
 #define MASKE_HELP_FARBE 51  /* IMAGE in tree MASKE_DIALOG */
 #define MASKE_HELP_SW 52  /* IMAGE in tree MASKE_DIALOG */
+#define MASKE_ORDNER 53  /* BUTTON in tree MASKE_DIALOG */
 
 #define MASKE_ICONIFY 1  /* form/dial */
 #define SU_ICON 1  /* IBOX in tree MASKE_ICONIFY */
@@ -79,6 +80,7 @@
 #define HD_LIST_KILL 16  /* STRING in tree BUBBLE_HILFEN */
 #define HD_LIST 17  /* STRING in tree BUBBLE_HILFEN */
 #define HD_LIST_CHANGE 18  /* STRING in tree BUBBLE_HILFEN */
+#define HD_ORDNER 19  /* STRING in tree BUBBLE_HILFEN */
 
 #define ASK_INHALT 3  /* form/dial */
 #define AI_REMEMBER 2  /* BUTTON in tree ASK_INHALT */
@@ -115,6 +117,13 @@
 #define CLIPBORAD_FLAGS 14  /* BUTTON in tree OPTION */
 #define CLIPBORAD_ORIGIN 15  /* BUTTON in tree OPTION */
 #define CLIPBORAD_ORIGIN_NAME 16  /* BUTTON in tree OPTION */
+#define CLIPBOARD_FORMAT 18  /* FTEXT in tree OPTION */
+
+#define IMAGE_DIALOG 8  /* form/dial */
+#define RADIO_SLCT 1  /* IMAGE in tree IMAGE_DIALOG */
+#define RADIO_DESLCT 2  /* IMAGE in tree IMAGE_DIALOG */
+#define RADIO_M_DESLCT 3  /* IMAGE in tree IMAGE_DIALOG */
+#define RADIO_M_SLCT 4  /* IMAGE in tree IMAGE_DIALOG */
 
 #define ERR_NO_MEM 0  /* Alert string */
 
@@ -184,7 +193,7 @@
 
 #define TIT_DATE 33  /*  */
 
-#define TIT_ATTR 34  /*  */
+#define TIT_ATTR 34  /* Free string */
 
 #define WINDOW_INFO 35  /*  */
 

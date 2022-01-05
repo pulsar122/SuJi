@@ -18,22 +18,28 @@
 #include "SuJi.h"
 
 #include "SuJi_av.h"
+#include "SuJi_but.h"
 #include "SuJi_con.h"
 #include "SuJi_DD.h"
 #include "SuJi_dia.h"
 #include "SuJi_fil.h"
+#include "SuJi_gsc.h"
 #include "SuJi_inh.h"
 #include "SuJi_lis.h"
 #include "SuJi_mas.h"
 #include "SuJi_opt.h"
 #include "SuJi_pfa.h"
 #include "SuJi_quo.h"
+#include "SuJi_scr.h"
 #include "SuJi_sor.h"
 #include "SuJi_vdi.h"
 #include "SuJi_win.h"
+#include "adaptrsc.h"
 
 #include "xdial.h"
 #include "dh_dir.h"
+
+#define FA_LINK			0x40					/* New Atrribute for links */
 
 extern char versionsnummernstring[];
 
@@ -56,6 +62,7 @@ struct CONFIG
 	int clipboard_flags;
 	int clipboard_origin;
 	int clipboard_origin_name;
+	char clipboard_format[50];
 };
 
 extern struct CONFIG config;
@@ -76,6 +83,7 @@ struct SUCHINFORMATIONEN
 	unsigned long max_size;
 	int big_is_small_maske;
 	int big_is_small_inhalt;
+	int show_folder;
 };
 
 extern struct SUCHINFORMATIONEN suji;
@@ -103,6 +111,14 @@ extern char help_str_dialog[];
 
 extern int there_is_check_and_set;
 
+extern int aes_flags;
+extern int aes_font;
+extern int aes_height;
+extern int pwchar;
+extern int phchar;
+extern int pwbox;
+extern int phbox;
+
 /* Variablen fÅr die USERDEFs in der Listbox */
 extern USERBLK ud_ENTRY1;
 extern USERBLK ud_ENTRY2;
@@ -110,6 +126,6 @@ extern USERBLK ud_ENTRY3;
 extern USERBLK ud_ENTRY4;
 
 extern int home_search( char *filename, char *configpath );
-
+extern void *myMxalloc( int32 size, int16 mode );
 
 #endif

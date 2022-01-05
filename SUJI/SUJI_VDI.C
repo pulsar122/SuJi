@@ -16,7 +16,7 @@ int init_vwork(void)
 	int wi[]={1,1,1,1,1,0,1,FIS_SOLID,0,WHITE,2};
 	int wo[60];
 
-	vdi_h=mt_graf_handle(&i,&i,&i,&i,&global);
+	vdi_h=mt_graf_handle( &pwchar, &phchar, &pwbox, &phbox,&global);
 	v_opnvwk(wi,&vdi_h,wo);
 	if(vdi_h==0)
 		return vdi_h;
@@ -118,12 +118,14 @@ int test_max_breite(FILE_INFO *fi)
 	max_breite[BR_DATE]=((((li>re) ? 8+li-re : 8+re-li)>max_breite[BR_DATE]) ? 
 					((li>re) ? 8+li-re : 8+re-li) : max_breite[BR_DATE]);
 
-	sprintf(mein,"%c%c%c%c%c",
+	sprintf(mein,"%c%c%c%c%c%c%c",
 		(fi->attrib & FA_READONLY) ? 'R' : '-',
 		(fi->attrib & FA_HIDDEN) ? 'H' : '-',
 		(fi->attrib & FA_SYSTEM) ? 'S' : '-',
 		(fi->attrib & FA_VOLUME) ? 'V' : '-',
-		(fi->attrib & FA_ARCHIVE) ? 'A' : '-');
+		(fi->attrib & FA_SUBDIR) ? 'D' : '-',
+		(fi->attrib & FA_ARCHIVE) ? 'A' : '-',
+		(fi->attrib & FA_LINK) ? 'L' : '-');
 	vqt_extent(vdi_h,mein,ext);
 
 	li=(ext[0]<ext[6]) ? ext[0] : ext[6];
@@ -414,6 +416,67 @@ void icons_anpassen(void)
 
 		/* Aussehen an 3D-Look anpassen */
 	reform_3d();
+
+
+
+{
+	OBJECT	**tree_addr;
+	OBJECT	*objs;
+	unsigned int		no_objs;
+	RSHDR		*rsh;
+	char		**fstring_addr;
+	int	tree_count;
+	int	hor_3d;
+	int	ver_3d;
+
+	aes_flags = get_aes_info( &aes_font, &aes_height, &hor_3d, &ver_3d, &global );
+
+	rsh = (RSHDR *) (global.ap_pmem);
+
+	tree_addr = (OBJECT **)(((UBYTE *)rsh) + rsh->rsh_trindex);	/* Zeiger auf die Objektbaumtabelle holen */
+	tree_count = rsh->rsh_ntree;								/* und Anzahl der Objektb„ume (von 1 ab gez„hlt) bestimmen */
+	fstring_addr = (BYTE **)((UBYTE *)rsh + rsh->rsh_frstr);	/* Zeiger auf die Free-Strings */
+	objs = (OBJECT *) (((BYTE *) rsh ) + rsh->rsh_object );	/* Zeiger auf die Objekte */
+	no_objs = rsh->rsh_nobs;										/* Anzahl der Objekte */
+
+	if ( aes_flags & GAI_3D )										/* 3D-Look? */
+		adapt3d_rsrc( objs, no_objs, hor_3d, ver_3d );
+	else																				/* 3D-Flags l”schen */
+	{
+		no3d_rsrc( objs, no_objs, 1 );
+/*
+		set_slider_borders();											/* Slider-Objekte auf 1 Pixel Rand setzen */
+*/
+	}
+
+	if (( aes_flags & GAI_MAGIC ) == 0 )				/* kein MagiC-AES? */
+	{
+		OBJECT	*slct;
+		OBJECT	*deslct;
+		
+		if ( phchar < 15 )
+		{
+			slct = tree_addr[IMAGE_DIALOG] + RADIO_M_SLCT;
+			deslct = tree_addr[IMAGE_DIALOG] + RADIO_M_DESLCT;
+		}
+		else
+		{
+			slct = tree_addr[IMAGE_DIALOG] + RADIO_SLCT;
+			deslct = tree_addr[IMAGE_DIALOG] + RADIO_DESLCT;
+		}
+
+		substitute_objects( objs, no_objs, aes_flags, slct, deslct );
+/*
+		set_slider_borders();											/* Slider-Objekte auf 1 Pixel Rand setzen */
+*/
+	}
+	else
+		substitute_objects( objs, no_objs, aes_flags, 0L, 0L );
+
+}
+
+
+
 }
 
 void reform_3d(void)

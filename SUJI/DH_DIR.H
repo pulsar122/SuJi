@@ -4,6 +4,10 @@
 #include <tos.h>
 #include <string.h>
 
+#ifndef FA_LINK
+	#define FA_LINK			0x40					/* New Atrribute for links */
+#endif
+
 	/* ôffne ein Verzeichnis zum Einlesen der darin enthaltenen Dateien/Ordner */
 	/* pfad: Zu îffnender Pfad (incl. abschlieûendem '\') */
 	/* RÅckgabe: internes Handle */

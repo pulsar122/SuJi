@@ -4,6 +4,7 @@ static char config_path[256];
 
 void load_config (void)
 {
+	long len;
 	FILE *fp;
 	
 	if ( home_search( "suji.inf" , config_path ) )
@@ -11,8 +12,16 @@ void load_config (void)
 		fp = fopen( config_path, "r" );
 		if (fp != NULL)
 		{
-			fread ( (void *)&config, 1, sizeof (struct CONFIG), fp );
+			len = fread ( (void *)&config, 1, sizeof (struct CONFIG), fp );
 			fclose ( fp );
+			if ( len != sizeof (struct CONFIG) )
+			{
+				char *s;
+				
+				s= (char *)&config;
+				s +=len;
+				memset ( (void *)s, 0, sizeof (struct CONFIG) - len );
+			}
 		}
 	}
 	else
@@ -32,6 +41,8 @@ void load_config (void)
 		config.clipboard_date = 0;
 		config.clipboard_flags = 0;
 		config.clipboard_origin = 1;
+		config.clipboard_origin_name = 0;
+		config.clipboard_format[0] = '\0';
 	}
 	set_show();
 }

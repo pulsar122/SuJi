@@ -605,8 +605,10 @@ void redraw_window(GRECT *r)
 						mein[1]=(fi->attrib & FA_HIDDEN) ? 'H' : '-';
 						mein[2]=(fi->attrib & FA_SYSTEM) ? 'S' : '-';
 						mein[3]=(fi->attrib & FA_VOLUME) ? 'V' : '-';
-						mein[4]=(fi->attrib & FA_ARCHIVE) ? 'A' : '-';
-						mein[5]='\0';
+						mein[4]=(fi->attrib & FA_SUBDIR) ? 'D' : '-';
+						mein[5]=(fi->attrib & FA_ARCHIVE) ? 'A' : '-';
+						mein[6]=(fi->attrib & FA_LINK) ? 'L' : '-';
+						mein[7]='\0';
 						v_gtext(handle,xes[4],y,mein);
 					}
 

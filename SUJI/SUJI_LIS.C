@@ -7,7 +7,7 @@ FILE_INFO *add_to_list(DTA *dta,char *pfad,long *sort_nr)
 	register long r_sort_nr;
 
 		/* Hole Speicher fr diesen Datensatz */
-	help=malloc(sizeof(FILE_INFO)+strlen(dta->d_fname)+2+strlen(pfad));
+	help=malloc(sizeof(FILE_INFO)+strlen(dta->d_fname)+3+strlen(pfad));
 	if(!help)
 		return 0;
 
@@ -19,7 +19,7 @@ FILE_INFO *add_to_list(DTA *dta,char *pfad,long *sort_nr)
 	help->size=dta->d_length;
 	help->attrib=dta->d_attrib;
 	help->name=(char *)help+sizeof(FILE_INFO);
-	help->pfad=(char *)help+sizeof(FILE_INFO)+strlen(dta->d_fname)+1;
+	help->pfad=(char *)help+sizeof(FILE_INFO)+strlen(dta->d_fname)+2;
 
 	strcpy(help->name,dta->d_fname);
 	strcpy(help->pfad,pfad);

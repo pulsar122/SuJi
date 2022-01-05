@@ -48,6 +48,8 @@ void handle_option ( void )
 	else
 		tree[CLIPBORAD_ORIGIN_NAME].ob_state &=~SELECTED;
 
+	strcpy(tree[CLIPBOARD_FORMAT].ob_spec.tedinfo->te_ptext, config.clipboard_format);
+	
 	mt_form_center_grect(tree,&big,&global);
 	mt_wind_update(BEG_MCTRL,&global);
 	mt_form_xdial_grect(FMD_START,&big,&big,&flydial,&global);
@@ -59,9 +61,6 @@ void handle_option ( void )
 	} while(button!=OPTION_OK && button!=OPTION_ABORT);
 
 	tree[button].ob_state&=~SELECTED;
-
-	mt_form_xdial_grect(FMD_FINISH,&big,&big,&flydial,&global);
-	mt_wind_update(END_MCTRL,&global);
 
 	if(button==OPTION_OK)
 	{
@@ -78,9 +77,14 @@ void handle_option ( void )
 		config.clipboard_flags = tree[CLIPBORAD_FLAGS].ob_state & SELECTED ? 1 : 0;
 		config.clipboard_origin = tree[CLIPBORAD_ORIGIN].ob_state & SELECTED ? 1 : 0;
 		config.clipboard_origin_name = tree[CLIPBORAD_ORIGIN_NAME].ob_state & SELECTED ? 1 : 0;
+
+		strcpy( config.clipboard_format, tree[CLIPBOARD_FORMAT].ob_spec.tedinfo->te_ptext );
 		
 		set_show();
 	}
+
+	mt_form_xdial_grect(FMD_FINISH,&big,&big,&flydial,&global);
+	mt_wind_update(END_MCTRL,&global);
 	
 	mt_wind_get_grect(window_handle,WF_WORKXYWH,&big,&global);
 	redraw_window(&big);

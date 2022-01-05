@@ -1,6 +1,10 @@
 #include "SuJi_glo.h"
 
-char versionsnummernstring[]="V1.36";
+char versionsnummernstring[]="V1.37";
+
+static OBJECT	**tree_addr;
+
+/*----------------------------------------------------------------------*/
 
 int main(int argc,char *argv[])
 {
@@ -84,14 +88,24 @@ int main(int argc,char *argv[])
 	}
 
 /* AV-Protokoll */
-	mt_rsrc_gaddr(5,NAME_AV,&prog_name,&global);
-	init_av_protokoll();
+	prog_name = (BYTE *) myMxalloc (256, 0 | MGLOBAL);
+	if ( prog_name )
+	{
+		char *s;
+		mt_rsrc_gaddr(5,NAME_AV,&s,&global);
+		strcpy ( prog_name, s );
+		init_av_protokoll();
+	}
+
 
 /* Entsprechend umbenennen */
 	while(prog_name[strlen(prog_name)-1]==' ')
 		prog_name[strlen(prog_name)-1]='\0';
 
 	mt_menu_register(-1,prog_name,&global);
+
+/* GEMScript Protocol */
+	init_gem_script ();
 
 /* Maus zurÅckschalten */
 	mt_graf_mouse(ARROW,NULL,&global);
@@ -143,7 +157,7 @@ int main(int argc,char *argv[])
 	ob_height = dialog_maske.tree[0].ob_height;
 
 	load_config();
-	
+
 	do
 	{
 		/* Restore tree high */
@@ -187,12 +201,17 @@ int main(int argc,char *argv[])
 			
 	} while (ret == -3);
 
-	exit_av_protokoll();
+	exit_gem_script ();
+	
+	if ( prog_name )
+	{
+		exit_av_protokoll();
+		Mfree ( prog_name );
+	}
 	exit_vwork();
 	free_pfade(suji.search_pfade);
+	substitute_free();
 	mt_rsrc_free(&global);
 	mt_appl_exit(&global);
 	return 0;
 }
-
-
