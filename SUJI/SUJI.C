@@ -1,8 +1,6 @@
 #include "SuJi_glo.h"
 
-char versionsnummernstring[]="V1.38";
-
-static OBJECT	**tree_addr;
+char versionsnummernstring[]="V1.39";
 
 /*----------------------------------------------------------------------*/
 

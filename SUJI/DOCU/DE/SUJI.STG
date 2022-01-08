@@ -1,7 +1,7 @@
-@database "SuJi V1.38"
+@database "SuJi V1.39"
 @subject "Dokumentation/Sonstiges"
 @author "Daniel Hîpfl, Gerhard Stoll"
-@$VER: SuJi.hyp 1.38 (@:"__DATE__")
+@$VER: SuJi.hyp 1.39 (@:"__DATE__")
 @options +gz-s-d12
 @help "Hallo erstma"
 
@@ -14,7 +14,7 @@ Titel                                                             SuJi
 
                                   zu
 
-                              @{B}SuJi 1.38@{b}
+                              @{B}SuJi 1.39@{b}
 
                                   von
 
@@ -465,6 +465,10 @@ FÅr die Bubble-Hilfen muû BubbleGEM installiert sein.
 @line 9 0 140 0 1
 Version   Bemerkung
 @line 1 70 0 0 1
+
+ 1.39     * Drag & Drop funktioniert wieder
+
+@line 1 70 0 0 5
 
  1.38     * Dokumentation aufgerÑumt.
           * Wird eine alte "suji.inf" gefunden, werden vernÅnftige

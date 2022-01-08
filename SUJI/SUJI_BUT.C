@@ -158,7 +158,7 @@ int handle_button ( void )
 					FILE_INFO *par;
 					EVNTDATA md;
 	
-					mt_graf_mkstate(&md.x,&md.y,&md.bstate,&md.bstate,&global);
+					mt_graf_mkstate(&md.x,&md.y,&md.bstate,&md.kstate,&global);
 	
 					eintrag=first_shown+(events.my-r.g_y-top_height)/line_height;
 	

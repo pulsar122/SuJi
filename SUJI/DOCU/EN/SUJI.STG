@@ -1,8 +1,8 @@
-@database "SuJi V1.38"
+@database "SuJi V1.39"
 @options +g +zz -s -d12
 @author "Daniel H”pfl @ A, English: Peter West"
 @help "Hallo to start"
-@$VER: SuJi.hyp 1.38
+@$VER: SuJi.hyp 1.39
 @subject "Documentation/Miscellaneous"
 
 
@@ -14,7 +14,7 @@ Title                                                             SuJi
 
                                  for
 
-                              @{0B}SuJi V1.38@{0}
+                              @{0B}SuJi V1.39@{0}
 
                                   by
 
@@ -610,6 +610,10 @@ For the bubble Help messages, BubbleGEM has to be installed.
 @Line 9 0 138 0 1
 Version   Remarks
 @line 1 70 0 0 1
+
+ 1.39     * Drag & Drop work again
+
+@line 1 70 0 0 5
 
  1.38     * Documentation correct.
           * If SuJi found a old "suji.inf", it will use
